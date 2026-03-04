@@ -340,6 +340,29 @@
                     </a>
                 </div>
 
+                <div class="work__card mix design pos-project">
+                    <div class="pos-slider">
+                        <div class="pos-slider-container">
+                            <img src="assets/img/pos-dashboard.jpg" alt="POS Dashboard" class="work__img pos-slide active">
+                            <img src="assets/img/pos-screen.jpg" alt="POS Screen" class="work__img pos-slide">
+                            <img src="assets/img/product.jpg" alt="POS Products" class="work__img pos-slide">
+                        </div>
+                        <div class="slider-dots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                            <span class="dot" data-slide="2"></span>
+                        </div>
+                    </div>
+
+                    <h3 class="work__title">Smart POS - Point of Sale System</h3>
+                    <p>Modern cloud-based Point of Sale system with real-time inventory management, multi-location support, and advanced analytics. Features include offline mode, barcode scanning, receipt printing, customer management, and comprehensive sales reporting with AI-powered insights.</p>
+                    <span class="work__tech"><strong>Tech Stack:</strong> Laravel API • Next.js 14 • TypeScript • Prisma ORM • PostgreSQL • Redis • Stripe • WebSockets • PWA • Tailwind CSS</span>
+
+                    <a class="work__button">
+                        Demo <i class='bx bx-right-arrow work__icon'></i>
+                    </a>
+                </div>
+
                 <div class="work__card mix design">
                     <img src="assets/img/CRM.jpg" alt="" class="work__img">
 
@@ -576,6 +599,70 @@
 
     <!--=============== MAIN JS ===============-->
     <script src="assets/js/main.js"></script>
+
+    <!--=============== POS SLIDER JS ===============-->
+    <script>
+        // POS Image Slider Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.pos-slide');
+            const dots = document.querySelectorAll('.slider-dots .dot');
+            let currentSlide = 0;
+            let slideInterval;
+
+            // Function to show specific slide
+            function showSlide(index) {
+                // Remove active class from all slides and dots
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                // Add active class to current slide and dot
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+            }
+
+            // Function to go to next slide
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Function to go to previous slide
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Auto-slide functionality (every 3 seconds)
+            function startAutoSlide() {
+                slideInterval = setInterval(nextSlide, 3000);
+            }
+
+            // Stop auto-slide
+            function stopAutoSlide() {
+                clearInterval(slideInterval);
+            }
+
+            // Add click event to dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function() {
+                    currentSlide = index;
+                    showSlide(currentSlide);
+                    stopAutoSlide();
+                    startAutoSlide(); // Restart auto-slide after manual selection
+                });
+            });
+
+            // Pause auto-slide on hover
+            const posSlider = document.querySelector('.pos-slider');
+            if (posSlider) {
+                posSlider.addEventListener('mouseenter', stopAutoSlide);
+                posSlider.addEventListener('mouseleave', startAutoSlide);
+            }
+
+            // Start auto-slide on page load
+            startAutoSlide();
+        });
+    </script>
 </body>
 <script>
     document.getElementById('contactForm').addEventListener('submit', function(event) {
